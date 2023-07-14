@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
     Grid,
@@ -11,6 +11,8 @@ import {
     Button,
     Paper
 } from "@material-ui/core";
+import { client } from "../api/axios";
+import { IUserResponse } from "../interface/IUser";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -41,6 +43,11 @@ const ListingPage = () => {
     const [category, setCategory] = useState("");
     const [searchValue, setSearchValue] = useState("");
     const [filteredItems, setFilteredItems] = useState([]);
+    const [users, setUsers] = useState<IUserResponse[]>([]);
+
+    useEffect(()=> {
+        getUserListing()
+    },[])
 
     const handleCategoryChange = (event: any) => {
         setCategory(event?.target?.value);
@@ -87,6 +94,13 @@ const ListingPage = () => {
         },
         getContentAnchorEl: null
     };
+
+    const getUserListing = async() => {
+        const response = await client.get('user');
+        const users: IUserResponse[] = response.data;
+        console.log("result===>>>",users);
+        setUsers(users);
+    }
 
     return (
         <div className={classes.container}>
@@ -141,11 +155,11 @@ const ListingPage = () => {
             </Grid>
             <Paper className={classes.paperBackground}>
                 <Typography variant="h6">Listing items:</Typography>
-                {filteredItems.length > 0 ? (
+                {users.length > 0 ? (
                     <ul className={classes.itemList}>
-                        {filteredItems.map((item: any) => (
-                            <li key={item.id} className={classes.listItem}>
-                                {item.name}
+                        {users.map((user: IUserResponse) => (
+                            <li key={user.id} className={classes.listItem}>
+                                {user.id}, {user.name} , {user.address} ,{user.mobile_no}
                             </li>
                         ))}
                     </ul>
