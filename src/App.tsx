@@ -4,6 +4,7 @@ import './App.css';
 import TopNav from './component/TopNav';
 import Footer from './component/Footer';
 import ListingPage from './pages/UserListing';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './material-ui.css';
 function App() {
   return (

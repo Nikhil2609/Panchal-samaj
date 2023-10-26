@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
+import vishvakarma_dada from '../assets/vishvakarma_dada.jpg'
+// import vishvakarma_dada from './vishvakarma_dada.jpg'
 
 export interface IAppProps {
 }
@@ -18,9 +20,19 @@ export default class TopNav extends React.Component<IAppProps, IAppState> {
     public render() {
         return (
             <div className='topnav'>
-                <Typography className='title' variant="h3" component="h3">
-                    Dhandhar Panchal 
-                </Typography>
+                <Grid container justifyContent="center">
+                    <Grid item md={3}>
+                        <img src={vishvakarma_dada} style={{ height: "200px", width: "200px", margin: "5px 0" }} />
+                    </Grid>
+                    <Grid item md={9} style={{ margin: "auto" }}>
+                        <Typography variant="h4" component="h4">
+                            Shree Dhandhar Panchal Seva Samaj
+                        </Typography>
+                        <Typography variant="h4" component="h4">
+                            શ્રી ધાન્ધાર પંચાલ સેવા સમાજ
+                        </Typography>
+                    </Grid>
+                </Grid>
                 <hr />
             </div>
         );
