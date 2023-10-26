@@ -21,10 +21,10 @@ export default class TopNav extends React.Component<IAppProps, IAppState> {
         return (
             <div className='topnav'>
                 <Grid container justifyContent="center">
-                    <Grid item md={3}>
-                        <img src={vishvakarma_dada} style={{ height: "200px", width: "200px", margin: "5px 0" }} />
+                    <Grid item md={3} style={{ textAlign: "center" }}>
+                        <img src={vishvakarma_dada} style={{ height: "200px", width: "200px", margin: "15px 0" }} />
                     </Grid>
-                    <Grid item md={9} style={{ margin: "auto" }}>
+                    <Grid item md={9} style={{ margin: "auto", textAlign: "center" }}>
                         <Typography variant="h4" component="h4">
                             Shree Dhandhar Panchal Seva Samaj
                         </Typography>

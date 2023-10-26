@@ -6,12 +6,14 @@ import Footer from './component/Footer';
 import ListingPage from './pages/UserListing';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './material-ui.css';
+import AddUser from './pages/AddUser';
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <TopNav />
-        <ListingPage />
+        {/* <ListingPage /> */}
+        <AddUser />
         <Footer />
       </header>
     </div>
