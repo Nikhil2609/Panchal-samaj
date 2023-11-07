@@ -24,7 +24,7 @@ export default class TopNav extends React.Component<IAppProps, IAppState> {
                     <Grid item md={3} style={{ textAlign: "center" }}>
                         <img src={vishvakarma_dada} style={{ height: "200px", width: "200px", margin: "15px 0" }} />
                     </Grid>
-                    <Grid item md={9} style={{ margin: "auto", textAlign: "center" }}>
+                    <Grid item md={9} style={{ margin: "auto", textAlign: "center", color: "white" }}>
                         <Typography variant="h4" component="h4">
                             Shree Dhandhar Panchal Seva Samaj
                         </Typography>

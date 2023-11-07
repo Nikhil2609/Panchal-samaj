@@ -13,6 +13,8 @@ import {
 } from "@material-ui/core";
 import { client } from "../api/axios";
 import { IUserResponse } from "../interface/IUser";
+import { Table } from "../component/Table";
+import AddUser from "./AddUser";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -40,14 +42,15 @@ const useStyles = makeStyles((theme) => ({
 
 const ListingPage = () => {
     const classes = useStyles();
+    const [listingScreen, setListingScreen] = useState(false);
     const [category, setCategory] = useState("");
     const [searchValue, setSearchValue] = useState("");
     const [filteredItems, setFilteredItems] = useState([]);
     const [users, setUsers] = useState<IUserResponse[]>([]);
 
-    useEffect(()=> {
+    useEffect(() => {
         getUserListing()
-    },[])
+    }, [])
 
     const handleCategoryChange = (event: any) => {
         setCategory(event?.target?.value);
@@ -95,67 +98,88 @@ const ListingPage = () => {
         getContentAnchorEl: null
     };
 
-    const getUserListing = async() => {
+    const getUserListing = async () => {
         const response = await client.get('user');
         const users: IUserResponse[] = response.data;
-        console.log("result===>>>",users);
+        console.log("result===>>>", users);
         setUsers(users);
     }
 
+    const columns = ['id', 'name', 'address', 'mobile_no'];
+    const data = [
+        { id: 1, Name: 'John Doe', Address: 'Navrangpura', Mobile: '9988776655' },
+        { id: 2, Name: 'Jane Smith', Address: 'Vastral', Mobile: '9876543210' },
+        // Additional rows...
+    ];
+
+    const displayCreateUserScreen = () => {
+        setListingScreen(false)
+    }
+
     return (
-        <div className={classes.container}>
-            <Grid container spacing={2} className={classes.filterSection}>
-                <Grid container justifyContent="center">
-                    <Typography variant="h4" component="h4">
-                        Dhandhar Panchal Samaj User List
-                    </Typography>
+        listingScreen ?
+            <div className={classes.container}>
+                <Grid container spacing={2} className={classes.filterSection}>
+                    <Grid container justifyContent="center">
+                        <Grid container item xs={12}>
+                            <Grid item xs={12} sm={8}>
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => displayCreateUserScreen()}
+                                >
+                                    Add User
+                                </Button>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <FormControl fullWidth>
+                                <InputLabel id="category-label">Category</InputLabel>
+                                <Select
+                                    labelId="category-label"
+                                    value={category}
+                                    onChange={handleCategoryChange}
+                                    MenuProps={menuProps}
+                                >
+                                    <MenuItem value="">All</MenuItem>
+                                    <MenuItem value="electronics">Electronics</MenuItem>
+                                    <MenuItem value="clothing">Clothing</MenuItem>
+                                    <MenuItem value="books">Books</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <TextField
+                                fullWidth
+                                label="Search"
+                                value={searchValue}
+                                onChange={handleSearchInputChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={handleFilterClick}
+                                className={classes.filterButton}
+                            >
+                                Filter
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                color="secondary"
+                                onClick={handleResetClick}
+                                className={classes.filterButton}
+                            >
+                                Reset
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} sm={4}>
-                    <FormControl fullWidth>
-                        <InputLabel id="category-label">Category</InputLabel>
-                        <Select
-                            labelId="category-label"
-                            value={category}
-                            onChange={handleCategoryChange}
-                            MenuProps={menuProps}
-                        >
-                            <MenuItem value="">All</MenuItem>
-                            <MenuItem value="electronics">Electronics</MenuItem>
-                            <MenuItem value="clothing">Clothing</MenuItem>
-                            <MenuItem value="books">Books</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                    <TextField
-                        fullWidth
-                        label="Search"
-                        value={searchValue}
-                        onChange={handleSearchInputChange}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleFilterClick}
-                        className={classes.filterButton}
-                    >
-                        Filter
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        color="secondary"
-                        onClick={handleResetClick}
-                        className={classes.filterButton}
-                    >
-                        Reset
-                    </Button>
-                </Grid>
-            </Grid>
-            <Paper className={classes.paperBackground}>
-                <Typography variant="h6">Listing items:</Typography>
-                {users.length > 0 ? (
+                <Paper className={classes.paperBackground}>
+                    <Typography variant="h6">Listing items:</Typography>
+                    {/* {users.length > 0 ? (
                     <ul className={classes.itemList}>
                         {users.map((user: IUserResponse) => (
                             <li key={user.id} className={classes.listItem}>
@@ -165,9 +189,12 @@ const ListingPage = () => {
                     </ul>
                 ) : (
                     <Typography>No items found.</Typography>
-                )}
-            </Paper>
-        </div>
+                )} */}
+                    <Table data={users} columns={columns} />
+                </Paper>
+            </div>
+            :
+            <AddUser />
     );
 };
 
