@@ -44,7 +44,7 @@ const AddUser = () => {
     // user modal
     const userModalInitialValue = {
         // personal details
-        fisrtName: '',
+        firstName: '',
         fatherName: '',
         gender: '',
         dob: '',
@@ -84,10 +84,33 @@ const AddUser = () => {
 
     // Define the validation schema using Yup
     const validationSchema = Yup.object().shape({
-        name: Yup.string().required('Name is required'),
-        email: Yup.string().email('Invalid email').required('Email is required'),
-        password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
-        confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
+        // name: Yup.string().required('Name is required'),
+        // email: Yup.string().email('Invalid email').required('Email is required'),
+        // password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+        // confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
+
+        firstName: Yup.string().required(),
+        fatherName: Yup.string().required(),
+        gender: Yup.string().required(),
+        dob: Yup.date().required(),
+        // birthPlace: Yup.string().required(),
+        educationQualification: Yup.string().required(),
+        businessOrJob: Yup.string().required(),
+        maritalStatus: Yup.string().required(),
+        talukaId: Yup.number().required(),
+        gamId: Yup.number().required(),
+        hobby: Yup.string().required(),
+        fathersFullName: Yup.string().required(),
+        fatherBusinessOrJob: Yup.string().required(),
+        fathersMobileNo: Yup.string().required(),
+        motherName: Yup.string().required(),
+        // motherTalukaId: Yup.number().required(),
+        // motherGamId: Yup.number().required(),
+        Address: Yup.string().required(),
+        City: Yup.string().required(),
+        profilePhoto: Yup.string().required(),
+        photo2: Yup.string().required(),
+        photo3: Yup.string().required()
     });
 
     // Handle form submission
@@ -177,7 +200,7 @@ const AddUser = () => {
         <Grid className="registration_container">
             <Formik
                 initialValues={userModalInitialValue}
-                // validationSchema={validationSchema}
+                validationSchema={validationSchema}
                 onSubmit={(values) => addUserProfileDetail(values)}
             >
                 {({ values, setFieldValue, handleChange, handleSubmit }) => {

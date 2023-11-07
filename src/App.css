@@ -47,11 +47,15 @@
 }
 
 .registration_container {
-  padding: 20px 20%;
+  padding: 20px 10%;
 }
 
 .form_label {
   display: flex !important;
   padding: 0 0 10px 0 !important;
   color: black !important;
+}
+
+.error {
+  color: red
 }
